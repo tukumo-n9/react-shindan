@@ -80,7 +80,7 @@ export default function App() {
         </header>
         <div className="container">
           {isResult
-            ? <Result retryClick={retry} />
+            ? <Result retryClick={retry} displayResult={calclateResult} />
             : <Question currentQuestionData={questionData[currentQuestion]} answerClick={answer} />
           }
           <div className="point-viewer">
@@ -109,14 +109,14 @@ function Question({ currentQuestionData, answerClick }) {
   );
 }
 
-function Result({ retryClick }) {
+function Result({ retryClick, displayResult }) {
   return (
     <>
       <div className="result">
-        <p>あなたにおすすめの作品は<em>ペルソナ3</em>です！</p>
+        <p>あなたにおすすめの作品は<em>{displayResult()}</em>です！</p>
       </div>
       <div className="description">
-        <p>ペルソナ3の説明</p>
+        <p>{displayResult()}の説明</p>
       </div>
       <div className="retry">
         <button onClick={retryClick}>もう一度診断する</button>
