@@ -2,14 +2,19 @@ import { useState } from 'react';
 import './App.css';
 
 export default function App() {
+  // 診断が開始しているかどうか
+  const [isStart, setIsStart] = useState(false);
+
   // 診断結果を表示するかどうか
   const [isResult, setIsResult] = useState(false);
+
   // 各作品のポイント
   const [point, setPoint] = useState({
     p3: 0,
     p4: 0,
     p5: 0,
   });
+
   // 現在の質問が何問目か
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
@@ -46,6 +51,23 @@ export default function App() {
       name: 'ペルソナ5',
       description: 'ペルソナ5の説明です。アルセーヌが出てきます。',
     },
+  };
+
+  // 状況に合わせてスタート画面・質問画面・診断結果画面を表示する
+  const switchScene = () => {
+    if (!isStart) {
+      return <Start startClick={handleStart} />;
+    }
+    if (isResult) {
+      return <Result retryClick={handleRetry} lastResultData={calclateResult()} />;
+    } else {
+      return <Question currentQuestionNumber={currentQuestion + 1} currentQuestionData={questionData[currentQuestion]} answerClick={handleAnswer} />;
+    }
+  };
+
+  // スタートボタンを押した時の処理
+  const handleStart = () => {
+    setIsStart(true);
   };
 
   // 質問に答えた時の処理
@@ -100,6 +122,7 @@ export default function App() {
       p5: 0,
     });
     setCurrentQuestion(0);
+    setIsStart(false);
   };
 
   return (
@@ -109,13 +132,26 @@ export default function App() {
           <h1><span>ペルソナシリーズ</span><span>おすすめ作品診断</span></h1>
         </header>
         <div className="container">
-          {isResult
-            ? <Result retryClick={handleRetry} lastResultData={calclateResult()} />
-            : <Question currentQuestionNumber={currentQuestion + 1} currentQuestionData={questionData[currentQuestion]} answerClick={handleAnswer} />
-          }
+          {switchScene()}
         </div>
         <DataViewer data={{isResult, point, currentQuestion, questionData, resuldData}} />
       </div>
+    </div>
+  );
+}
+
+// スタート画面のコンポーネント
+function Start({ startClick }) {
+  return (
+    <div className="start">
+      <div className="start__lead">
+        <p>「ペルソナ」シリーズは株式会社アトラスが制作・販売しているRPGシリーズです。</p>
+        <p>昼は高校、夜は世界を救う戦いの二重生活。</p>
+        <p>心の奥底に眠るもう一人の自分＝「ペルソナ」を解き放ち、強大な敵に立ち向かう。</p>
+        <p>現在でもプレイすることが容易な作品である、ペルソナ3・4・5の中であなたにおすすめの作品を診断します。
+        </p>
+      </div>
+      <div className="start__button"><button onClick={startClick}>診断を始める</button></div>
     </div>
   );
 }
