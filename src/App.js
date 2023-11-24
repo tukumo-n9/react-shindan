@@ -101,7 +101,7 @@ export default function App() {
     <div className="App">
       <div className="wrapper">
         <header className='header'>
-          <h1>ペルソナシリーズおすすめ作品診断</h1>
+          <h1><span>ペルソナシリーズ</span><span>おすすめ作品診断</span></h1>
         </header>
         <div className="container">
           {isResult

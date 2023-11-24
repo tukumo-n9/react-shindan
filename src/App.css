@@ -16,6 +16,10 @@
   text-align: center;
 }
 
+.header h1 span {
+  display: inline-block;
+}
+
 .container {
   max-width: 1440px;
   margin: 0 auto;
@@ -54,4 +58,8 @@
   background-color: #000;
   color: #fff;
   padding: 20px;
+}
+
+.data-viewer pre {
+  overflow: auto;
 }
