@@ -2,28 +2,31 @@ import { useState } from 'react';
 import './App.css';
 
 export default function App() {
+  // 診断結果を表示するかどうか
   const [isResult, setIsResult] = useState(false);
+  // 各作品のポイント
   const [point, setPoint] = useState({
     p3: 0,
     p4: 0,
     p5: 0,
   });
+  // 現在の質問が何問目か
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   // 質問のデータ
   const questionData = [
     {
-      question: 'Q1. ペルソナ3が好きですか？',
+      question: 'ペルソナ3が好きですか？',
       yes: 'p3',
       no: '',
     },
     {
-      question: 'Q2. ペルソナ4が好きですか？',
+      question: 'ペルソナ4が好きですか？',
       yes: 'p4',
       no: '',
     },
     {
-      question: 'Q3. ペルソナ5が好きですか？',
+      question: 'ペルソナ5が好きですか？',
       yes: 'p5',
       no: '',
     },
@@ -45,7 +48,8 @@ export default function App() {
     },
   };
 
-  const answer = (target) => {
+  // 質問に答えた時の処理
+  const handleAnswer = (target) => {
     switch (target) {
       case 'p3':
         setPoint({...point, p3: point.p3 + 1});
@@ -87,6 +91,7 @@ export default function App() {
     return resuldData[max];
   }
 
+  // 診断をやり直す
   const handleRetry = () => {
     setIsResult(false);
     setPoint({
@@ -106,7 +111,7 @@ export default function App() {
         <div className="container">
           {isResult
             ? <Result retryClick={handleRetry} lastResultData={calclateResult()} />
-            : <Question currentQuestionData={questionData[currentQuestion]} answerClick={answer} />
+            : <Question currentQuestionNumber={currentQuestion + 1} currentQuestionData={questionData[currentQuestion]} answerClick={handleAnswer} />
           }
         </div>
         <DataViewer data={{isResult, point, currentQuestion, questionData, resuldData}} />
@@ -115,11 +120,12 @@ export default function App() {
   );
 }
 
-function Question({ currentQuestionData, answerClick }) {
+// 質問画面のコンポーネント
+function Question({ currentQuestionNumber ,currentQuestionData, answerClick }) {
   return (
     <>
       <div className="question">
-        <p>{currentQuestionData.question}</p>
+        <p>{`Q${currentQuestionNumber}. ${currentQuestionData.question}`}</p>
       </div>
       <div className="answer">
         <button onClick={() => answerClick(currentQuestionData.yes)}>はい</button>
@@ -129,6 +135,7 @@ function Question({ currentQuestionData, answerClick }) {
   );
 }
 
+// 診断結果画面のコンポーネント
 function Result({ retryClick, lastResultData: { name, description } }) {
   return (
     <>
@@ -145,6 +152,7 @@ function Result({ retryClick, lastResultData: { name, description } }) {
   )
 }
 
+// データを表示するデバッグ用のコンポーネント
 function DataViewer({ data }) {
   return (
     <div className="data-viewer">
