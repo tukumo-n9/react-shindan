@@ -9,6 +9,8 @@ export default function App() {
     p5: 0,
   });
   const [currentQuestion, setCurrentQuestion] = useState(0);
+
+  // 質問のデータ
   const questionData = [
     {
       question: 'Q1. ペルソナ3が好きですか？',
@@ -26,6 +28,22 @@ export default function App() {
       no: '',
     },
   ];
+
+  // 診断結果のデータ
+  const resuldData = {
+    p3: {
+      name: 'ペルソナ3',
+      description: 'ペルソナ3の説明です。オルフェウスが出てきます。',
+    },
+    p4: {
+      name: 'ペルソナ4',
+      description: 'ペルソナ4の説明です。イザナギが出てきます。',
+    },
+    p5: {
+      name: 'ペルソナ5',
+      description: 'ペルソナ5の説明です。アルセーヌが出てきます。',
+    },
+  };
 
   const answer = (target) => {
     switch (target) {
@@ -48,21 +66,28 @@ export default function App() {
     }
   };
 
-  const calclateResult = () => {
+  // ポイントが最大のものを返す
+  const getPointMax = () => {
     const max = Math.max(point.p3, point.p4, point.p5);
     switch (max) {
       case point.p3:
-        return 'ペルソナ3';
+        return 'p3';
       case point.p4:
-        return 'ペルソナ4';
+        return 'p4';
       case point.p5:
-        return 'ペルソナ5';
+        return 'p5';
       default:
-        return 'エラー：結果が正しく計算できませんでした。';
+        return null;
     }
+  };
+
+  // 最大のポイントを持つ作品のデータを返す
+  const calclateResult = () => {
+    const max = getPointMax();
+    return resuldData[max];
   }
 
-  const retry = () => {
+  const handleRetry = () => {
     setIsResult(false);
     setPoint({
       p3: 0,
@@ -80,16 +105,11 @@ export default function App() {
         </header>
         <div className="container">
           {isResult
-            ? <Result retryClick={retry} displayResult={calclateResult} />
+            ? <Result retryClick={handleRetry} lastResultData={calclateResult()} />
             : <Question currentQuestionData={questionData[currentQuestion]} answerClick={answer} />
           }
-          <div className="point-viewer">
-            <h2>各選択肢のポイント</h2>
-            <p>ペルソナ3: {point.p3}pt</p>
-            <p>ペルソナ4: {point.p4}pt</p>
-            <p>ペルソナ5: {point.p5}pt</p>
-          </div>
         </div>
+        <DataViewer data={{isResult, point, currentQuestion, questionData, resuldData}} />
       </div>
     </div>
   );
@@ -109,18 +129,26 @@ function Question({ currentQuestionData, answerClick }) {
   );
 }
 
-function Result({ retryClick, displayResult }) {
+function Result({ retryClick, lastResultData: { name, description } }) {
   return (
     <>
       <div className="result">
-        <p>あなたにおすすめの作品は<em>{displayResult()}</em>です！</p>
+        <p>あなたにおすすめの作品は<em>{name}</em>です！</p>
       </div>
       <div className="description">
-        <p>{displayResult()}の説明</p>
+        <p>{description}</p>
       </div>
       <div className="retry">
         <button onClick={retryClick}>もう一度診断する</button>
       </div>
     </>
   )
+}
+
+function DataViewer({ data }) {
+  return (
+    <div className="data-viewer">
+      <pre>{JSON.stringify(data, undefined, 4)}</pre>
+    </div>
+  );
 }
