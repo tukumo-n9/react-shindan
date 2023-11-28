@@ -38,7 +38,7 @@ export default function App() {
   ];
 
   // 診断結果のデータ
-  const resuldData = {
+  const resultData = {
     p3: {
       name: 'ペルソナ3',
       description: 'ペルソナ3の説明です。オルフェウスが出てきます。',
@@ -59,7 +59,7 @@ export default function App() {
       return <Start startClick={handleStart} />;
     }
     if (isResult) {
-      return <Result retryClick={handleRetry} lastResultData={calclateResult()} />;
+      return <Result retryClick={handleRetry} lastResultData={calculateResult()} />;
     } else {
       return <Question currentQuestionNumber={currentQuestion + 1} currentQuestionData={questionData[currentQuestion]} answerClick={handleAnswer} />;
     }
@@ -108,9 +108,9 @@ export default function App() {
   };
 
   // 最大のポイントを持つ作品のデータを返す
-  const calclateResult = () => {
+  const calculateResult = () => {
     const max = getPointMax();
-    return resuldData[max];
+    return resultData[max];
   }
 
   // 診断をやり直す
@@ -134,7 +134,7 @@ export default function App() {
         <div className="container">
           {switchScene()}
         </div>
-        <DataViewer data={{isResult, point, currentQuestion, questionData, resuldData}} />
+        <DataViewer data={{isResult, point, currentQuestion, questionData, resultData}} />
       </div>
     </div>
   );
