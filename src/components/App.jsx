@@ -1,5 +1,7 @@
+"use client";
+
 import { useState } from 'react';
-import './App.css';
+import './App.module.css';
 
 export default function App() {
   // 診断が開始しているかどうか

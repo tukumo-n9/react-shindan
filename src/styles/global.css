@@ -1,0 +1,11 @@
+:root {
+  --p3-theme-color: #01d5ff;
+  --p4-theme-color: #fbfa00;
+  --p5-theme-color: #ff012c;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
