@@ -18,6 +18,9 @@ export default function App() {
   // 現在の質問が何問目か
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
+  // 質問のデータ(CMSから取得)
+  // const [CMSQuestionData, setCMSQuestionData] = useState([]);
+
   // 質問のデータ
   const questionData = [
     {
@@ -37,6 +40,9 @@ export default function App() {
     },
   ];
 
+  // 診断結果のデータ(CMSから取得)
+  // const [CMSResultData, setCMSResultData] = useState([]);
+
   // 診断結果のデータ
   const resultData = {
     p3: {
@@ -52,6 +58,16 @@ export default function App() {
       description: 'ペルソナ5の説明です。アルセーヌが出てきます。',
     },
   };
+
+  // useEffectでfetch処理を行う
+  // useEffect(() => {
+  //   // 非同期処理の場合は、関数を定義しそれを呼び出すような形式で記述すること
+  //   const fetchQuestionData = async () => {
+  //     const newQuestionData = await fetchHogeList();
+  //     setCMSQuestionData(newQuestionData);
+  //   };
+  //   fetchQuestionData();
+  // }, []);
 
   // 状況に合わせてスタート画面・質問画面・診断結果画面を表示する
   const switchScene = () => {
