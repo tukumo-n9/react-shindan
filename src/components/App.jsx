@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import './App.module.css';
+import styles from './App.module.css';
 
 export default function App() {
   // 診断が開始しているかどうか
@@ -144,12 +144,12 @@ export default function App() {
   };
 
   return (
-    <div className="App">
-      <div className="wrapper">
-        <header className='header'>
+    <div className={styles.App}>
+      <div className={styles.wrapper}>
+        <header className={styles.header}>
           <h1><span>ペルソナシリーズ</span><span>おすすめ作品診断</span></h1>
         </header>
-        <div className="container">
+        <div className={styles.container}>
           {switchScene()}
         </div>
         <DataViewer data={{isResult, point, currentQuestion, questionData, resultData}} />
@@ -161,15 +161,15 @@ export default function App() {
 // スタート画面のコンポーネント
 function Start({ startClick }) {
   return (
-    <div className="start">
-      <div className="start__lead">
+    <div className={styles.start}>
+      <div className={styles.start__lead}>
         <p>「ペルソナ」シリーズは株式会社アトラスが制作・販売しているRPGシリーズです。</p>
         <p>昼は高校、夜は世界を救う戦いの二重生活。</p>
         <p>心の奥底に眠るもう一人の自分＝「ペルソナ」を解き放ち、強大な敵に立ち向かう。</p>
         <p>現在でもプレイすることが容易な作品である、ペルソナ3・4・5の中であなたにおすすめの作品を診断します。
         </p>
       </div>
-      <div className="start__button"><button onClick={startClick}>診断を始める</button></div>
+      <div className={styles.start__button}><button onClick={startClick}>診断を始める</button></div>
     </div>
   );
 }
@@ -178,10 +178,10 @@ function Start({ startClick }) {
 function Question({ currentQuestionNumber ,currentQuestionData, answerClick }) {
   return (
     <>
-      <div className="question">
+      <div className={styles.question}>
         <p>{`Q${currentQuestionNumber}. ${currentQuestionData.question}`}</p>
       </div>
-      <div className="answer">
+      <div className={styles.answer}>
         <button onClick={() => answerClick(currentQuestionData.yes)}>はい</button>
         <button onClick={() => answerClick(currentQuestionData.no)} >いいえ</button>
       </div>
@@ -193,13 +193,13 @@ function Question({ currentQuestionNumber ,currentQuestionData, answerClick }) {
 function Result({ retryClick, lastResultData: { name, description } }) {
   return (
     <>
-      <div className="result">
+      <div className={styles.result}>
         <p>あなたにおすすめの作品は<em>{name}</em>です！</p>
       </div>
-      <div className="description">
+      <div className={styles.description}>
         <p>{description}</p>
       </div>
-      <div className="retry">
+      <div className={styles.retry}>
         <button onClick={retryClick}>もう一度診断する</button>
       </div>
     </>
@@ -209,7 +209,7 @@ function Result({ retryClick, lastResultData: { name, description } }) {
 // データを表示するデバッグ用のコンポーネント
 function DataViewer({ data }) {
   return (
-    <div className="data-viewer">
+    <div className={styles.dataViewer}>
       <pre>{JSON.stringify(data, undefined, 4)}</pre>
     </div>
   );

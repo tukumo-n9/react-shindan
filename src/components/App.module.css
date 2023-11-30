@@ -60,13 +60,13 @@
   text-align: center;
 }
 
-.data-viewer {
+.dataViewer {
   margin-top: 60px;
   background-color: #000;
   color: #fff;
   padding: 20px;
 }
 
-.data-viewer pre {
+.dataViewer pre {
   overflow: auto;
 }
