@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import styles from './App.module.css';
 
-export default function App() {
+export default function App({ propsQuestionData, propsResultData }) {
   // 診断が開始しているかどうか
   const [isStart, setIsStart] = useState(false);
 
@@ -21,7 +21,7 @@ export default function App() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   // 質問のデータ(CMSから取得)
-  // const [CMSQuestionData, setCMSQuestionData] = useState([]);
+  const [CMSQuestionData, setCMSQuestionData] = useState(propsQuestionData);
 
   // 質問のデータ
   const questionData = [
@@ -43,7 +43,7 @@ export default function App() {
   ];
 
   // 診断結果のデータ(CMSから取得)
-  // const [CMSResultData, setCMSResultData] = useState([]);
+  const [CMSResultData, setCMSResultData] = useState(propsResultData);
 
   // 診断結果のデータ
   const resultData = {
@@ -60,16 +60,6 @@ export default function App() {
       description: 'ペルソナ5の説明です。アルセーヌが出てきます。',
     },
   };
-
-  // useEffectでfetch処理を行う
-  // useEffect(() => {
-  //   // 非同期処理の場合は、関数を定義しそれを呼び出すような形式で記述すること
-  //   const fetchQuestionData = async () => {
-  //     const newQuestionData = await fetchHogeList();
-  //     setCMSQuestionData(newQuestionData);
-  //   };
-  //   fetchQuestionData();
-  // }, []);
 
   // 状況に合わせてスタート画面・質問画面・診断結果画面を表示する
   const switchScene = () => {
@@ -152,7 +142,7 @@ export default function App() {
         <div className={styles.container}>
           {switchScene()}
         </div>
-        <DataViewer data={{isResult, point, currentQuestion, questionData, resultData}} />
+        <DataViewer data={{isResult, point, currentQuestion, questionData, resultData, CMSQuestionData, CMSResultData}} />
       </div>
     </div>
   );
